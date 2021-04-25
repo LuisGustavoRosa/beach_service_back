@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const knex = require('./src/api/db')
+const knex = require('./config/database')
 const consign = require('consign')
 
 app.db = knex

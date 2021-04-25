@@ -1,5 +1,7 @@
 "use strict";
 
+const AuthController = require("../app/Controllers/Http/AuthController");
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -15,7 +17,23 @@
 
 const Route = use("Route");
 
+
+//Usuário
+
 Route.post("/register", "AuthController.register");
+Route.post("/register_product", "ProductController.register_product");
 Route.post("/authenticate", "AuthController.authenticate");
 
-Route.get("/app", "AppController.index").middleware(["auth"]);
+Route.group(()=>{
+    Route.resource("users","AuthController").apiOnly();
+}).middleware('auth');
+
+
+Route.group(()=>{
+    Route.resource("products","ProductController").apiOnly();
+})
+
+
+
+
+
