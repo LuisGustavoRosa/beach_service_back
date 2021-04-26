@@ -33,6 +33,12 @@ Route.group(()=>{
     Route.resource("products","ProductController").apiOnly();
 })
 
+//rota se chamna login usando a class UserController com o metodo login
+Route.post('/login',"UserController.login");
+
+
+
+
 
 
 
