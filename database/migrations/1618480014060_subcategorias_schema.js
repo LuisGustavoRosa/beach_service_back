@@ -3,20 +3,19 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class ProductsSchema extends Schema {
+class SubcategoriasSchema extends Schema {
   up () {
-    this.create('produtos', (table) => {
+    this.create('subcategorias', (table) => {
       table.increments('id').primary()
-      table.string('nome', 64).notNullable()
+      table.string('nome').notNull()
       table.integer('categoria_id').references('id').inTable('categorias').notNull()
-      table.integer('subcategoria_id').references('id').inTable('subcategorias').notNull()
       table.timestamps()
     })
   }
 
   down () {
-    this.drop('products')
+    this.drop('subcategorias')
   }
 }
 
-module.exports = ProductsSchema
+module.exports = SubcategoriasSchema
