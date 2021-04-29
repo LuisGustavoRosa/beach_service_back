@@ -1,5 +1,12 @@
 'use strict'
 
+
+
+const providers = [
+  '@adonisjs/validator/providers/ValidatorProvider'
+]
+
+
 const Env = use('Env')
 
 module.exports = {
@@ -12,6 +19,8 @@ module.exports = {
   | to encrypted cookies, sessions and other sensitive data.
   |
   */
+  
+
   appKey: Env.get('APP_KEY'),
 
   http: {

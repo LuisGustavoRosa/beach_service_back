@@ -2,8 +2,38 @@
 
 const User = use("App/Models/User");
 
+const {validateAll} = use("Validator");
+
+
 class AuthController {
-  async register({ request }) {
+  async register({ request, response }) {
+
+    const rules = {
+      username:'required',
+      email:'required',
+      password:'required',
+      cep:'required',
+      telefone:'required',
+      data_nascimento:'required',
+      tipo_user:'required'
+    }
+
+    const  messages ={
+        "username.required":'O nome deve ser informado',
+        "email.required":' O email deve ser informado',
+        "password.required": 'A senha deve ser informada',
+        "cep.required":" O CEP deve ser informado",
+        "telefone.required": "O telefone deve ser informado",
+        "data_nascimento.required": "Precisa informar a data de nascimento",
+        "tipo_user":"Precisa informar o tipo de usuário"
+    }
+
+    const validate = await validateAll(request.all(), rules, messages);
+
+    if(validate.fails()){
+      return response.status(401).send({message: validate.messages()})
+    }
+
     const data = request.only(['id','username', 'email', 'password','cep','telefone','data_nascimento','tipo_user']);
 
     const user = await User.create(data);
