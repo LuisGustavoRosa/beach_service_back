@@ -8,7 +8,7 @@ Route.post("/register_produtos", "ProductController.register_produtos");
 Route.post("/authenticate", "AuthController.authenticate");
 
 Route.group(()=>{
-    Route.resource("users","UserController").apiOnly();
+    Route.resource("users","AuthController").apiOnly();
 }).middleware('auth');
 
 
