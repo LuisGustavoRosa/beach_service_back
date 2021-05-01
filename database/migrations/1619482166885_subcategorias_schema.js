@@ -6,9 +6,7 @@ const Schema = use('Schema')
 class SubcategoriasSchema extends Schema {
   up () {
     this.create('subcategorias', (table) => {
-      table.increments('id').primary()
-      table.string('nome').notNull()
-      table.integer('categoria_id').references('id').inTable('categorias').notNull()
+      table.increments()
       table.timestamps()
     })
   }

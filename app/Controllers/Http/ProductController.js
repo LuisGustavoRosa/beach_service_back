@@ -1,44 +1,48 @@
 'use strict'
-const Product = use("App/Models/Product");
-class ProductController {
+const Produtos = use("App/Models/Produtos");
+const Database = use('Database')
 
-    async register_product({ request }){
-        
+class ProdutosController {
+
+    async register_produtos({ request }){
         const data = request.only(['name']);
-        const product = await Product.create(data);
-        
-        return product
+        const produtos = await Produtos.create(data);
+        return produtos
     }
 
     async index(){
-        return await Product.all();
-    }
+         return await Database
+        .table('produtos')
+        .innerJoin('categorias', 'produtos.categoria_id', 'categorias.id')
+        .select(
+            'produtos.id',   
+            'produtos.nome',
+            'categorias.id',
+            'categorias.nome'
+        )
+        
+        }
 
+    
     async show({params}){
-        return await Product.find(params.id);
+        return await Produtos.find(params.id);
     }
 
     async update ({params, request}){
-        const product = await Product.findOrFail(params.id);
-
+        const Produtos = await Produtos.findOrFail(params.id);
         const dataToUpdate= request.only(['name']);
-
-        product.merge(dataToUpdate);
-
-        await product.save();
-
-        return product;
+        Produtos.merge(dataToUpdate);
+        await Produtos.save();
+        return Produtos;
     }
 
     async destroy({params}){
-        const product = await Product.findOrFail(params.id);
-
-        await product.delete();
-
+        const Produtos = await Produtos.findOrFail(params.id);
+        await Produtos.delete();
         return {
             message: 'Produto Excluido'
         }
     }
 }
 
-module.exports = ProductController
+module.exports = ProdutosController

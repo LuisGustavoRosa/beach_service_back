@@ -33,25 +33,19 @@ class AuthController {
     if(validate.fails()){
       return response.status(401).send({message: validate.messages()})
     }
-
     const data = request.only(['id','username', 'email', 'password','cep','telefone','data_nascimento','tipo_user']);
-
     const user = await User.create(data);
-
     return user;
   }
 
   async authenticate({ request, auth }) {
     const { email, password } = request.all();
-
     const token = await auth.attempt(email, password);
-
     return token;
   }
  
  async index(){
    const users= await User.all();
-
    return users;
  }
 
@@ -61,21 +55,15 @@ async show({params}){
 
 async update ({params, request}){
     const user = await User.findOrFail(params.id);
-
     const dataToUpdate= request.only(['name', 'email','password','cep','telefone','data_nascimento']);
-
     user.merge(dataToUpdate);
-
     await user.save();
-
     return user;
 }
 
 async destroy({params}){
     const user = await User.findOrFail(params.id);
-
     await user.delete();
-
     return {
         message: 'Usuário Excluido'
     }
