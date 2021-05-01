@@ -9,7 +9,7 @@ Route.post("/authenticate", "AuthController.authenticate");
 
 Route.group(()=>{
     Route.resource("users","AuthController").apiOnly();
-}).middleware('auth');
+});
 
 
 // Produtos
@@ -22,7 +22,7 @@ Route.group(() => {
       Route.resource("categorias", "CategoriasController")
       .apiOnly()
       .except("update"); 
-  }).middleware(["auth"]);
+});
 
   Route.resource("produtos_user", "ProdutosUserController")
       .apiOnly()
