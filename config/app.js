@@ -2,9 +2,7 @@
 
 
 
-const providers = [
-  '@adonisjs/validator/providers/ValidatorProvider'
-]
+
 
 
 const Env = use('Env')
