@@ -44,9 +44,22 @@ class AuthController {
 
   async authenticate({ request, auth }) {
     const {id, email, password } = request.all();
-    const token = await auth.attempt(id,email, password);
+    const {token} = await auth.attempt(id,email, password);
 
-    return token;
+    //ira passar o token para usuario 
+    //jwt para ele conseguir acessar aplicação
+    return {token};
+
+    
+      
+
+  }
+//O show método abaixo verifica se o id parâmetro de rota é igual ao usuário conectado no momento
+  show({auth, params}){
+    if(auth.user.id !== Number(params.id)){
+      return "Você não pode ver o perfil de outra pessoa"
+    }
+    return auth.user
   }
  
   async index(){

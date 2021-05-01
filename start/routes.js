@@ -1,5 +1,7 @@
 "use strict";
 
+const AuthController = require("../app/Controllers/Http/AuthController");
+
 const Route = use("Route");
 
 
@@ -31,6 +33,7 @@ Route.group(() => {
       .except("update");
 
 
+      Route.post('/register', AuthController.register)
 
 
 
