@@ -37,7 +37,7 @@ Route.group(() => {
 
 
 
-  //Route
+Route
 
   //.post('users', 'UserController.store')
  // .validator('User')
