@@ -16,7 +16,7 @@ class CategoriaController {
 
 
   async store({ request, auth }) {
-    const data = request.only(["nome"]);
+    const data = request.only(["descricao"]);
     const tweet = await Categorias.create(data);
 
     return tweet;

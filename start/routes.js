@@ -2,14 +2,16 @@
 
 const Route = use("Route");
 
-Route.post('/login',"UserController.login");
-Route.post("/register", "AuthController.register");
+
+// Route.post("/register", "AuthController.register");
 Route.post("/register_produtos", "ProductController.register_produtos");
 Route.post("/authenticate", "AuthController.authenticate");
 
+
+
 Route.group(()=>{
     Route.resource("users","AuthController").apiOnly();
-}).middleware('auth');
+});
 
 
 // Produtos
@@ -29,9 +31,16 @@ Route.group(() => {
       .except("update");
 
 
-Route
-  .post('users', 'UserController.store')
-  .validator('User')
+
+
+
+
+
+
+  //Route
+
+  //.post('users', 'UserController.store')
+ // .validator('User')
 
 
 

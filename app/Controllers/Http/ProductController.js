@@ -5,7 +5,7 @@ const Produtos = use("App/Models/Produtos");
 class ProdutosController {
 
     async store({ request }){
-        const data = request.only(['name']);
+        const data = request.only(['descricao']);
         const produtos = await Produtos.create(data);
         return produtos
     }
@@ -23,7 +23,7 @@ class ProdutosController {
 
     async update ({params, request}){
         const Produtos = await Produtos.findOrFail(params.id);
-        const dataToUpdate= request.only(['name']);
+        const dataToUpdate= request.only(['descricao']);
         Produtos.merge(dataToUpdate);
         await Produtos.save();
         return Produtos;

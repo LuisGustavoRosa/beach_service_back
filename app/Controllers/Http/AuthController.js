@@ -7,12 +7,14 @@ const {validateAll} = use("Validator");
 
 
 class AuthController {
-  async register({ request, response }) {
+
+  async store({ request, response }) {
 
     const rules = {
-      username:'required',
+      nome:'required',
       email:'required',
       password:'required',
+      empresa:'required',
       cep:'required',
       telefone:'required',
       data_nascimento:'required',
@@ -20,9 +22,10 @@ class AuthController {
     }
 
     const  messages ={
-        "username.required":'O nome deve ser informado',
+        "nome.required":'O nome deve ser informado',
         "email.required":' O email deve ser informado',
         "password.required": 'A senha deve ser informada',
+        "empresa.required":' A empresa deve ser informado',
         "cep.required":" O CEP deve ser informado",
         "telefone.required": "O telefone deve ser informado",
         "data_nascimento.required": "Precisa informar a data de nascimento",
@@ -34,14 +37,15 @@ class AuthController {
     if(validate.fails()){
       return response.status(401).send({message: validate.messages()})
     }
-    const data = request.only(['id','username', 'email', 'password','cep','telefone','data_nascimento','tipo_user']);
+    const data = request.only(['id','nome', 'email', 'password','empresa','cep','telefone','data_nascimento','tipo_user']);
     const user = await User.create(data);
     return user;
   }
 
   async authenticate({ request, auth }) {
-    const { email, password } = request.all();
-    const token = await auth.attempt(email, password);
+    const {id, email, password } = request.all();
+    const token = await auth.attempt(id,email, password);
+
     return token;
   }
  
@@ -57,7 +61,7 @@ async show({params}){
 
 async update ({params, request}){
     const user = await User.findOrFail(params.id);
-    const dataToUpdate= request.only(['name', 'email','password','cep','telefone','data_nascimento']);
+    const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento']);
     user.merge(dataToUpdate);
     await user.save();
     return user;
