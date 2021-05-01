@@ -1,6 +1,7 @@
 "use strict";
 
 const User = use("App/Models/User");
+const Produtos = use("App/Models/Produtos")
 
 const {validateAll} = use("Validator");
 
@@ -44,10 +45,11 @@ class AuthController {
     return token;
   }
  
- async index(){
-   const users= await User.all();
-   return users;
- }
+  async index(){
+    const users= await User.all();
+    return users;
+  }
+
 
 async show({params}){
     return await User.find(params.id);

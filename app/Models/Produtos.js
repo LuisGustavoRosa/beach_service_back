@@ -5,7 +5,12 @@ const Model = use('Model')
 
 class Produtos extends Model {
     
-    
+    categorias(){
+        return this.belongsTo('App/Models/Categorias')
+    }
+    user(){
+        return this.belongsTo('App/Models/User')
+    }
     
 }
 

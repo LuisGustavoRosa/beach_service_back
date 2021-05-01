@@ -14,9 +14,19 @@ Route.group(()=>{
 
 // Produtos
 
-Route.group(()=>{
-    Route.resource("produtos","ProductController").apiOnly();
-})
+Route.group(() => {
+    Route.resource("produtos", "ProductController")
+      .apiOnly()
+      .except("update");
+
+      Route.resource("categorias", "CategoriasController")
+      .apiOnly()
+      .except("update"); 
+  }).middleware(["auth"]);
+
+  Route.resource("produtos_user", "ProdutosUserController")
+      .apiOnly()
+      .except("update");
 
 
 Route

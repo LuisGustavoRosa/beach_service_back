@@ -1,31 +1,24 @@
 'use strict'
 const Produtos = use("App/Models/Produtos");
-const Database = use('Database')
+
 
 class ProdutosController {
 
-    async register_produtos({ request }){
+    async store({ request }){
         const data = request.only(['name']);
         const produtos = await Produtos.create(data);
         return produtos
     }
 
-    async index(){
-         return await Database
-        .table('produtos')
-        .innerJoin('categorias', 'produtos.categoria_id', 'categorias.id')
-        .select(
-            'produtos.id',   
-            'produtos.nome',
-            'categorias.id',
-            'categorias.nome'
-        )
-        
-        }
-
-    
+    async index() {
+        const produtos = await Produtos.query()
+          .with("categorias")
+          .fetch();
+        return produtos;
+      }
+      
     async show({params}){
-        return await Produtos.find(params.id);
+        return await Produtos.query(params.id)
     }
 
     async update ({params, request}){
