@@ -37,7 +37,7 @@ Route.group(() => {
       Route.resource("produtos_user", "ProdutosUserController")
         .apiOnly()
         .except("update");
-  }).middleware('auth');
+  })
 
 
 
