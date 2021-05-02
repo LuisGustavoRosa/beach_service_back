@@ -1,5 +1,7 @@
 "use strict";
 
+const AuthController = require("../app/Controllers/Http/AuthController");
+
 const Route = use("Route");
 
 //Rota Login do user que faz a autenticação
