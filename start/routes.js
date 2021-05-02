@@ -2,45 +2,39 @@
 
 const Route = use("Route");
 
+//Rota Login do user que faz a autenticação
+Route
+  .post('authenticate', 'AuthController.authenticate')
+  
+//Rota que faz o registro do usuário
+Route
+  .post("users", "AuthController.store")
 
-// Route.post("/register", "AuthController.register");
-Route.post("/register_produtos", "ProductController.register_produtos");
-Route.post("/authenticate", "AuthController.authenticate");
+//Rota que faz a listagem de todos os usuários
+Route
+  .get("users", "AuthController.index")
+
+  //Rota que preciso passar um id e me retorna o usuário daquele id
+Route
+  .get('users/:id', 'AuthController.show')
+  .middleware('auth')
 
 
-
-Route.group(()=>{
-    Route.resource("users","AuthController").apiOnly();
-});
-
-
-// Produtos
-
+//Produtos, Categorias, Produtos_user
 Route.group(() => {
     Route.resource("produtos", "ProductController")
-      .apiOnly()
-      .except("update");
+        .apiOnly()
+        .except("update");
 
       Route.resource("categorias", "CategoriasController")
-      .apiOnly()
-      .except("update"); 
+        .apiOnly()
+        .except("update"); 
+      
+      Route.resource("produtos_user", "ProdutosUserController")
+        .apiOnly()
+        .except("update");
   }).middleware(["auth"]);
 
-  Route.resource("produtos_user", "ProdutosUserController")
-      .apiOnly()
-      .except("update");
-
-
-
-
-
-
-
-
-Route
-
-  //.post('users', 'UserController.store')
- // .validator('User')
 
 
 

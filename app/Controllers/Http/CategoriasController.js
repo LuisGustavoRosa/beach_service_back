@@ -10,10 +10,8 @@ class CategoriaController {
     return categorias;
   }
 
-  
   async create ({ request, response, view }) {
   }
-
 
   async store({ request, auth }) {
     const data = request.only(["descricao"]);

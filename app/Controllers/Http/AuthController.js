@@ -32,6 +32,7 @@ class AuthController {
         "tipo_user":"Precisa informar o tipo de usuário"
     }
 
+     
     const validate = await validateAll(request.all(), rules, messages);
 
     if(validate.fails()){
@@ -43,10 +44,21 @@ class AuthController {
   }
 
   async authenticate({ request, auth }) {
-    const {id, email, password } = request.all();
-    const token = await auth.attempt(id,email, password);
+    const {email, password } = request.all();
+    const token = await auth.attempt(email, password);
+    await auth
+    .withRefreshToken()
+    .attempt(email, password)
+    const data = request.only(['id','email', 'password',token]);
+    
+    return data
+  }
 
-    return token;
+  show ({ auth, params }) {
+    if (auth.user.id !== Number(params.id)) {
+      return "Usuário não autenticado"
+    }
+    return auth.user
   }
  
   async index(){
@@ -55,9 +67,14 @@ class AuthController {
   }
 
 
-async show({params}){
-    return await User.find(params.id);
-}
+//   async getById ({req, req}){
+//     User.db('users')
+//         .select('id', 'nome', 'email')
+//         .where({ id: req.params.id })
+//         .first()
+//         .then(user => res.json(user))
+//         .catch(err => res.status(500).send(err))
+// }
 
 async update ({params, request}){
     const user = await User.findOrFail(params.id);
@@ -74,9 +91,6 @@ async destroy({params}){
         message: 'Usuário Excluido'
     }
 }
-  
-
-
 
 }
 
