@@ -5,7 +5,7 @@ const Route = use("Route");
 
 //Rota Login do user que faz a autenticação
 Route
-  .post('users/authenticate', 'AuthController.authenticate')
+  .post('users/auth', 'AuthController.authenticate')
   
 //Rota que faz o registro do usuário
 Route
