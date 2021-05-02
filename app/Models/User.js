@@ -14,7 +14,7 @@ class User extends Model {
     });
   }
   
-  async formatDates (field, value) {
+  static formatDates (field, value) {
     if (field === 'dob') {
       return value.format('YYYY-MM-DD')
     }

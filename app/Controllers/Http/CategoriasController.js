@@ -13,7 +13,7 @@ class CategoriaController {
   async create ({ request, response, view }) {
   }
 
-  async store({ request, auth }) {
+  async store({ request }) {
     const data = request.only(["descricao"]);
     const tweet = await Categorias.create(data);
 

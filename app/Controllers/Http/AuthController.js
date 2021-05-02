@@ -1,8 +1,7 @@
 "use strict";
 
-const User = use("App/Models/User");
-const Produtos = use("App/Models/Produtos")
 
+const User = use("App/Models/User");
 const {validateAll} = use("Validator");
 
 
@@ -32,13 +31,17 @@ class AuthController {
         "tipo_user":"Precisa informar o tipo de usuário"
     }
 
+    
      
     const validate = await validateAll(request.all(), rules, messages);
 
     if(validate.fails()){
       return response.status(401).send({message: validate.messages()})
     }
+    
     const data = request.only(['id','nome', 'email', 'password','empresa','cep','telefone','data_nascimento','tipo_user']);
+    //const data_nasc = formatDates(data.data_nascimento)
+    //data.data_nascimento = data_nasc
     const user = await User.create(data);
     return user;
   }
@@ -48,33 +51,24 @@ class AuthController {
     const token = await auth.attempt(email, password);
     await auth
     .withRefreshToken()
-    .attempt(email, password)
-    const data = request.only(['id','email', 'password',token]);
-    
-    return data
+    .attempt( email, password)    
+    return token
   }
 
   show ({ auth, params }) {
     if (auth.user.id !== Number(params.id)) {
       return "Usuário não autenticado"
     }
-    return auth.user
+    const data  = {'id':auth.user.id,'nome':auth.user.nome, 'email':auth.user.email, 
+                  'empresa':auth.user.empresa,'cep':auth.user.cep,'telefone':auth.user.telefone, 
+                  'data_nascimento':auth.user.data_nascimento,'tipo_user':auth.user.tipo_user}
+    return data
   }
  
   async index(){
     const users= await User.all();
     return users;
   }
-
-
-//   async getById ({req, req}){
-//     User.db('users')
-//         .select('id', 'nome', 'email')
-//         .where({ id: req.params.id })
-//         .first()
-//         .then(user => res.json(user))
-//         .catch(err => res.status(500).send(err))
-// }
 
 async update ({params, request}){
     const user = await User.findOrFail(params.id);
