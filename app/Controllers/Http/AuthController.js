@@ -13,7 +13,6 @@ class AuthController {
       nome:'required',
       email:'required',
       password:'required',
-      empresa:'required',
       cep:'required',
       telefone:'required',
       data_nascimento:'required',
@@ -24,7 +23,6 @@ class AuthController {
         "nome.required":'O nome deve ser informado',
         "email.required":' O email deve ser informado',
         "password.required": 'A senha deve ser informada',
-        "empresa.required":' A empresa deve ser informado',
         "cep.required":" O CEP deve ser informado",
         "telefone.required": "O telefone deve ser informado",
         "data_nascimento.required": "Precisa informar a data de nascimento",
@@ -35,13 +33,12 @@ class AuthController {
      
     const validate = await validateAll(request.all(), rules, messages);
 
+    
     if(validate.fails()){
       return response.status(401).send({message: validate.messages()})
     }
     
     const data = request.only(['id','nome', 'email', 'password','empresa','cep','telefone','data_nascimento','tipo_user']);
-    //const data_nasc = formatDates(data.data_nascimento)
-    //data.data_nascimento = data_nasc
     const user = await User.create(data);
     return user;
   }

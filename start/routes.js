@@ -33,8 +33,7 @@ Route.group(() => {
       Route.resource("categorias", "CategoriasController")
         .apiOnly()
         .except("update"); 
-      
-      
+  
   })
 
 
