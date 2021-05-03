@@ -13,6 +13,7 @@ class AuthController {
       nome:'required',
       email:'required',
       password:'required',
+      empresa:'required',
       cep:'required',
       telefone:'required',
       data_nascimento:'required',
@@ -23,6 +24,7 @@ class AuthController {
         "nome.required":'O nome deve ser informado',
         "email.required":' O email deve ser informado',
         "password.required": 'A senha deve ser informada',
+        "empresa.required":' A empresa deve ser informado',
         "cep.required":" O CEP deve ser informado",
         "telefone.required": "O telefone deve ser informado",
         "data_nascimento.required": "Precisa informar a data de nascimento",
@@ -32,15 +34,48 @@ class AuthController {
     
      
     const validate = await validateAll(request.all(), rules, messages);
+    
 
     
-    if(validate.fails()){
-      return response.status(401).send({message: validate.messages()})
+    if(validate._data.tipo_user == 1){
+      console.log(validate._data.tipo_user)
+      if(validate.fails()){
+        return response.status(401).send({message: validate.messages()})
+      }
+      const data = request.only(['id','nome', 'email', 'password','empresa','cep','telefone','data_nascimento','tipo_user']);
+      const user = await User.create(data);
+      return user;
+    
+    }else if(validate._data.tipo_user == 0){
+
+      const rules = {
+        nome:'required',
+        email:'required',
+        password:'required',
+        cep:'required',
+        telefone:'required',
+        data_nascimento:'required',
+        tipo_user:'required'
+      }
+  
+      const  messages ={
+          "nome.required":'O nome deve ser informado',
+          "email.required":' O email deve ser informado',
+          "password.required": 'A senha deve ser informada',
+          "cep.required":" O CEP deve ser informado",
+          "telefone.required": "O telefone deve ser informado",
+          "data_nascimento.required": "Precisa informar a data de nascimento",
+          "tipo_user":"Precisa informar o tipo de usuário"
+      }
+      const validate = await validateAll(request.all(), rules, messages);
+      if(validate.fails()){
+        return response.status(401).send({message: validate.messages()})
+      }
+      const data = request.only(['id','nome', 'email', 'password','cep','telefone','data_nascimento','tipo_user']);
+      const user = await User.create(data);
+      return user;
     }
     
-    const data = request.only(['id','nome', 'email', 'password','empresa','cep','telefone','data_nascimento','tipo_user']);
-    const user = await User.create(data);
-    return user;
   }
 
   async authenticate({ request, auth }) {
