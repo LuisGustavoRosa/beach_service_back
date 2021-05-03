@@ -26,7 +26,7 @@ Route
 
 //Produtos, Categorias, Produtos_user
 Route.group(() => {
-    Route.resource("produtos", "ProdutosUserController")
+    Route.resource("produtos", "ProductController")
         .apiOnly()
         .except("update");
 

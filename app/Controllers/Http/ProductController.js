@@ -4,12 +4,12 @@ const Produtos = use("App/Models/Produtos");
 
 class ProdutosController {
 
-    async store({ request }){
-
-        const data = request.only(['descricao']);
-        const produtos = await Produtos.create(data);
-        return produtos
-    }
+    async store ({ request}) {
+        const data = request.input('produtos');
+        console.log(data)
+        const produto_user = await Produto_User.createMany(data)
+        return produto_user;
+      }
 
     async index() {
         const produtos = await Produtos.query()
