@@ -7,7 +7,6 @@ class ProdutosController {
 
     async store ({ request}) {
         const user_produtos = request.input('produtos');
-        console.log( user_produtos)
         const produto_user = await Produto_User.createMany( user_produtos)
         return produto_user;
       }
