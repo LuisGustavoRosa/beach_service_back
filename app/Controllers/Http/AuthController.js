@@ -74,10 +74,8 @@ class AuthController {
       const data = request.only(['id','nome', 'email', 'password','cep','telefone','data_nascimento','tipo_user']);
       const user = await User.create(data);
       return user;
-    }
-    
+    } 
   }
-
   async authenticate({ request, auth }) {
     const {email, password } = request.all();
     const token = await auth.attempt(email, password);
@@ -86,7 +84,6 @@ class AuthController {
     .attempt( email, password)    
     return token
   }
-
   show ({ auth, params }) {
     if (auth.user.id !== Number(params.id)) {
       return "Usuário não autenticado"
@@ -96,12 +93,10 @@ class AuthController {
                   'data_nascimento':auth.user.data_nascimento,'tipo_user':auth.user.tipo_user}
     return data
   }
- 
   async index(){
     const users= await User.all();
     return users;
   }
-
 async update ({params, request}){
     const user = await User.findOrFail(params.id);
     const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento']);
@@ -109,7 +104,6 @@ async update ({params, request}){
     await user.save();
     return user;
 }
-
 async destroy({params}){
     const user = await User.findOrFail(params.id);
     await user.delete();
@@ -117,7 +111,5 @@ async destroy({params}){
         message: 'Usuário Excluido'
     }
 }
-
 }
-
 module.exports = AuthController;
