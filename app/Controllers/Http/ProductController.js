@@ -37,7 +37,7 @@ class ProdutosController {
         return {
             message: 'Produto Excluido'
         }
-    }
+     }   
 }
 
 module.exports = ProdutosController

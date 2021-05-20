@@ -3,9 +3,12 @@
 
 const User = use("App/Models/User");
 const {validateAll} = use("Validator");
-
+const Database = ("database");
 
 class AuthController {
+
+  //index=listar, show= Exibir, store= criar, 
+  //update=alterar, destroy=delete
 
   async store({ request, response }) {
 
@@ -91,12 +94,42 @@ class AuthController {
     const data  = {'id':auth.user.id,'nome':auth.user.nome, 'email':auth.user.email, 
                   'empresa':auth.user.empresa,'cep':auth.user.cep,'telefone':auth.user.telefone, 
                   'data_nascimento':auth.user.data_nascimento,'tipo_user':auth.user.tipo_user}
+
+  // função para detectar se user ta online/offline
+
+      function hasNetwork(online){ 
+        const element = data.querySelector(".online");
+        
+        if(online){
+          element.classList.remove("offline");
+          element.classList.add("online");
+          element.innerText = "Online";
+        }else{
+          element.classList.remove("online");
+          element.classList.add("offline");
+          element.innerText = "OFFline";
+        }
+      } 
+         window.addEventListener("load", () =>{
+        hasNetwork(navigator.onLine);
+
+         window.addEventListener("online", () =>{
+          hasNetwork(true); 
+        });
+
+        window.addEventListener("offline", () =>{
+          hasNetwork(false); 
+        });
+      });
+
     return data
   }
+
   async index(){
     const users= await User.all();
     return users;
   }
+
 async update ({params, request}){
     const user = await User.findOrFail(params.id);
     const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento']);
