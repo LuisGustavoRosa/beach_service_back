@@ -18,7 +18,7 @@ Route
   .middleware('auth')
   //Rota que preciso passar um id e me retorna o usuário daquele id
 Route
-  .get('users/:id', 'AuthController.show')
+  .get('users/:id', 'AuthController.getById')
   .middleware('auth')
   
   

@@ -3,12 +3,10 @@
 
 const User = use("App/Models/User");
 const {validateAll} = use("Validator");
-const Database = ("database");
+const Database = use('Database')
+
 
 class AuthController {
-
-  //index=listar, show= Exibir, store= criar, 
-  //update=alterar, destroy=delete
 
   async store({ request, response }) {
 
@@ -20,7 +18,10 @@ class AuthController {
       cep:'required',
       telefone:'required',
       data_nascimento:'required',
-      tipo_user:'required'
+      tipo_user:'required',
+      lng:'required',
+      lat:'required',
+      online:'required'
     }
 
     const  messages ={
@@ -31,7 +32,10 @@ class AuthController {
         "cep.required":" O CEP deve ser informado",
         "telefone.required": "O telefone deve ser informado",
         "data_nascimento.required": "Precisa informar a data de nascimento",
-        "tipo_user":"Precisa informar o tipo de usuário"
+        "tipo_user":"Precisa informar o tipo de usuário",
+        "lat":"Precisa informar a latitude",
+        "lng":"Precisa informar a longitude",
+        "online":"Precisa informar o status"
     }
 
     
@@ -45,7 +49,7 @@ class AuthController {
       if(validate.fails()){
         return response.status(401).send({message: validate.messages()})
       }
-      const data = request.only(['id','nome', 'email', 'password','empresa','cep','telefone','data_nascimento','tipo_user']);
+      const data = request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento','tipo_user','lat','lng','online']);
       const user = await User.create(data);
       return user;
     
@@ -58,7 +62,11 @@ class AuthController {
         cep:'required',
         telefone:'required',
         data_nascimento:'required',
-        tipo_user:'required'
+        tipo_user:'required',
+        lng:'required',
+        lat:'required',
+        online:'required'
+        
       }
   
       const  messages ={
@@ -68,69 +76,57 @@ class AuthController {
           "cep.required":" O CEP deve ser informado",
           "telefone.required": "O telefone deve ser informado",
           "data_nascimento.required": "Precisa informar a data de nascimento",
-          "tipo_user":"Precisa informar o tipo de usuário"
+          "tipo_user":"Precisa informar o tipo de usuário",
+          "lat":"Precisa informar a latitude",
+          "lng":"Precisa informar a longitude",
+          "online":"Precisa informar o status"
       }
       const validate = await validateAll(request.all(), rules, messages);
       if(validate.fails()){
         return response.status(401).send({message: validate.messages()})
       }
-      const data = request.only(['id','nome', 'email', 'password','cep','telefone','data_nascimento','tipo_user']);
+      const data = request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento','tipo_user','  lat','lng','online']);
       const user = await User.create(data);
       return user;
     } 
   }
   async authenticate({ request, auth }) {
-    const {email, password } = request.all();
-    const token = await auth.attempt(email, password);
-    await auth
-    .withRefreshToken()
-    .attempt( email, password)    
-    return token
+        const {email, password } = request.all();
+        const token = await auth.attempt(email, password);
+        await auth
+        .withRefreshToken()
+        .attempt( email, password)    
+        return token
   }
-  show ({ auth, params }) {
-    if (auth.user.id !== Number(params.id)) {
-      return "Usuário não autenticado"
-    }
-    const data  = {'id':auth.user.id,'nome':auth.user.nome, 'email':auth.user.email, 
-                  'empresa':auth.user.empresa,'cep':auth.user.cep,'telefone':auth.user.telefone, 
-                  'data_nascimento':auth.user.data_nascimento,'tipo_user':auth.user.tipo_user}
-
-  // função para detectar se user ta online/offline
-
-      function hasNetwork(online){ 
-        const element = data.querySelector(".online");
+  
+  
+  async getById ({params}){
         
-        if(online){
-          element.classList.remove("offline");
-          element.classList.add("online");
-          element.innerText = "Online";
-        }else{
-          element.classList.remove("online");
-          element.classList.add("offline");
-          element.innerText = "OFFline";
+        if(params.id == 1){
+          const database = await Database.from('users').where(function () {
+            this.where('online', 1)
+            this.where('tipo_user', 0 )
+          })
+          return database
+        }else if(params.id == 0){
+          const database = await Database.from('users').where(function () {
+            this.where('online', 1)
+            this.where('tipo_user', 1 )
+          })
+            return database
         }
-      } 
-         window.addEventListener("load", () =>{
-        hasNetwork(navigator.onLine);
-
-         window.addEventListener("online", () =>{
-          hasNetwork(true); 
-        });
-
-        window.addEventListener("offline", () =>{
-          hasNetwork(false); 
-        });
-      });
-
-    return data
   }
-
+  
+  
   async index(){
-    const users= await User.all();
-    return users;
+        const database = await Database
+        .table('users')
+        .select('*')
+        .innerJoin('produtos_users')
+        
+        return database
   }
-
-async update ({params, request}){
+/* async update ({params, request}){
     const user = await User.findOrFail(params.id);
     const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento']);
     user.merge(dataToUpdate);
@@ -143,6 +139,6 @@ async destroy({params}){
     return {
         message: 'Usuário Excluido'
     }
-}
+} */
 }
 module.exports = AuthController;
