@@ -28,6 +28,9 @@ class User extends Model {
   produtos() {
     return this.hasMany("App/Models/Produtos");
   }
+  produtos_user() {
+    return this.hasMany("App/Models/ProdutosUser");
+  }
 }
 
 

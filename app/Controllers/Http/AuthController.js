@@ -91,42 +91,52 @@ class AuthController {
     } 
   }
   async authenticate({ request, auth }) {
-        const {email, password } = request.all();
-        const token = await auth.attempt(email, password);
-        await auth
-        .withRefreshToken()
-        .attempt( email, password)    
-        return token
-  }
-  
-  
-  async getById ({params}){
-        
-        if(params.id == 1){
-          const database = await Database.from('users').where(function () {
-            this.where('online', 1)
-            this.where('tipo_user', 0 )
-          })
-          return database
-        }else if(params.id == 0){
-          const database = await Database.from('users').where(function () {
-            this.where('online', 1)
-            this.where('tipo_user', 1 )
-          })
-            return database
-        }
+    const {email, password } = request.all();
+    const token = await auth.attempt(email, password);
+    await auth
+    .withRefreshToken()
+    .attempt( email, password)    
+    return token
   }
   
   
   async index(){
-        const database = await Database
-        .table('users')
-        .select('*')
-        .innerJoin('produtos_users')
-        
-        return database
+    const database = await Database
+    .table('users')
+    .select('*')
+    .innerJoin('produtos_users')
   }
-/* async update ({params, request}){
+    
+    
+    async show ({ params }) {
+      const user = await User.findOrFail(params.id);
+      return user;
+      
+  }
+
+  /*  async getById ({request}){
+      
+    const data = request.only(['tipo_user'])
+    
+        if(data.tipo_user == 1){
+          const database = await Database.from('users')
+          .where(function () {
+            this.where('online', 1)
+            this.where('tipo_user', 0 )
+          })
+          return database
+        }else if(data.tipo_user== 0){
+          const database = Database.from('produtos_users')
+          .innerJoin('users','users_id','produtos_users.users_id')
+          .innerJoin('produtos','produtos.id','produtos_users.produtos_id')
+          .where(function () {
+            this.where('online', 1)
+            this.where('tipo_user', 1 )
+          }) 
+            return database
+        } 
+      } */
+async update ({params, request}){
     const user = await User.findOrFail(params.id);
     const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento']);
     user.merge(dataToUpdate);
@@ -139,6 +149,6 @@ async destroy({params}){
     return {
         message: 'Usuário Excluido'
     }
-} */
+}
 }
 module.exports = AuthController;
