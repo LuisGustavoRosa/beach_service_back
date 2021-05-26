@@ -5,7 +5,9 @@ const Model = use('Model')
 
 class Categoria extends Model {
     produtos() {
-        return this.hasMany("App/Models/Produtos");
+      return this.belongsToMany("App/Models/Produtos").pivotTable(
+        'produtos_users'
+      );
       }
 }
 

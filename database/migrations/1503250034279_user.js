@@ -14,9 +14,9 @@ class UserSchema extends Schema {
       table.string('telefone',15).notNullable()
       table.date('data_nascimento').notNullable()
       table.integer('tipo_user', 0).notNullable()
-      table.string('LAT',40).notNullable()
-      table.string('LNG',40).notNullable()
-      table.boolean('online').default(0)
+      table.string('lat',40).notNullable()
+      table.string('lng',40).notNullable()
+      table.boolean('online').default(false)
       table.timestamps()
     })
   }

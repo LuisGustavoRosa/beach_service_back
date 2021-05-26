@@ -26,7 +26,9 @@ class User extends Model {
   }
 
   produtos() {
-    return this.hasMany("App/Models/Produtos");
+    return this.belongsToMany("App/Models/Produtos").pivotTable(
+      'produtos_users'
+    );
   }
   produtos_user() {
     return this.hasMany("App/Models/ProdutosUser");
