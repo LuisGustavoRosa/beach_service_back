@@ -125,12 +125,19 @@ class AuthController {
             this.where('tipo_user', 0 )
           })
           return database
+
         }else if(data.tipo_user== 0){
-          const users =  await User.query().with('produtos.categorias').fetch()
+          const users =  await User.query().with('produtos.categorias').where(
+            function (){
+              this.where('online', 1)
+              this.where('tipo_user', 1)
+            }).fetch()
+
           return users
         } 
       } 
-/* async update ({params, request}){
+      
+ async update ({params, request}){
     const user = await User.findOrFail(params.id);
     const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento']);
     user.merge(dataToUpdate);
@@ -143,6 +150,6 @@ async destroy({params}){
     return {
         message: 'Usuário Excluido'
     }
-} */
+} 
 }
 module.exports = AuthController;

@@ -11,10 +11,6 @@ class Produtos extends Model {
     user(){
         return this.belongsTo('App/Models/User')
     }
-
-   // static scopeAlias(query){
-   //     return query.select(['descricao','categoria_id'])
-  //  }
 }
 
 
