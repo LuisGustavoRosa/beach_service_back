@@ -19,8 +19,6 @@ class AuthController {
       telefone:'required',
       data_nascimento:'required',
       tipo_user:'required',
-      lng:'required',
-      lat:'required',
       online:'required'
     }
 
@@ -33,8 +31,6 @@ class AuthController {
         "telefone.required": "O telefone deve ser informado",
         "data_nascimento.required": "Precisa informar a data de nascimento",
         "tipo_user":"Precisa informar o tipo de usuário",
-        "lat":"Precisa informar a latitude",
-        "lng":"Precisa informar a longitude",
         "online":"Precisa informar o status"
     }
 
@@ -63,8 +59,6 @@ class AuthController {
         telefone:'required',
         data_nascimento:'required',
         tipo_user:'required',
-        lng:'required',
-        lat:'required',
         online:'required'
         
       }
@@ -77,15 +71,13 @@ class AuthController {
           "telefone.required": "O telefone deve ser informado",
           "data_nascimento.required": "Precisa informar a data de nascimento",
           "tipo_user":"Precisa informar o tipo de usuário",
-          "lat":"Precisa informar a latitude",
-          "lng":"Precisa informar a longitude",
           "online":"Precisa informar o status"
       }
       const validate = await validateAll(request.all(), rules, messages);
       if(validate.fails()){
         return response.status(401).send({message: validate.messages()})
       }
-      const data = request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento','tipo_user','  lat','lng','online']);
+      const data = request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento','tipo_user','lat','lng','online']);
       const user = await User.create(data);
       return user;
     } 
