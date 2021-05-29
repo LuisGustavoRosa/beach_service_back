@@ -19,7 +19,10 @@ Route
 
   //Rota para listar clientes e vendedores onlines
   Route
-  .get('users', 'AuthController.getById')
+  .get('users', 'AuthController.index')
+
+  Route
+  .put('users/:id', 'AuthController.update')
 
 //Produtos, Categorias, Produtos_user
 Route.group(() => {

@@ -90,24 +90,14 @@ class AuthController {
     .attempt( email, password)    
     return token
   }
-  
-  
-  async index(){
-    const database = await Database
-    .table('users')
-    .select('*')
-    .innerJoin('produtos_users')
-  }
-    
-    
+      
     async show ({ params }) {
       const user = await User.findOrFail(params.id);
       return user;
       
   }
 
-   async getById ({request}){
-      
+   async index ({request}){
     const data = request.only(['tipo_user'])
     
         if(data.tipo_user == 1){
@@ -117,21 +107,18 @@ class AuthController {
             this.where('tipo_user', 0 )
           })
           return database
-
         }else if(data.tipo_user== 0){
           const users =  await User.query().with('produtos.categorias').where(
             function (){
               this.where('online', 1)
               this.where('tipo_user', 1)
             }).fetch()
-
           return users
-        } 
+        }
       } 
-      
  async update ({params, request}){
     const user = await User.findOrFail(params.id);
-    const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento']);
+    const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento','tipo_user','lat','lng','online']);
     user.merge(dataToUpdate);
     await user.save();
     return user;
