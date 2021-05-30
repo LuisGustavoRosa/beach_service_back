@@ -94,7 +94,6 @@ class AuthController {
     async show ({ params }) {
       const user = await User.findOrFail(params.id);
       return user;
-      
   }
 
    async index ({request}){
@@ -116,7 +115,7 @@ class AuthController {
           return users
         }
       } 
- async update ({params, request}){
+  async update ({params, request}){
     const user = await User.findOrFail(params.id);
     const dataToUpdate= request.only(['nome', 'email','password','empresa','cep','telefone','data_nascimento','tipo_user','lat','lng','online']);
     user.merge(dataToUpdate);

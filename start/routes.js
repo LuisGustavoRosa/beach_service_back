@@ -11,6 +11,7 @@ Route
 Route
   //.post("users", "AuthController.store")
   .post("users", "AuthController.store")
+  
 
   //Rota que preciso passar um id e me retorna o usuário daquele id
 Route
@@ -20,6 +21,7 @@ Route
   //Rota para listar clientes e vendedores onlines
   Route
   .get('users', 'AuthController.index')
+
 
   Route
   .put('users/:id', 'AuthController.update')
