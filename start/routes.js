@@ -24,21 +24,21 @@ Route
   Route
   .get('users', 'AuthController.index')
 
+  Route
+  .delete('users/:id', 'AuthController.destroy')
 
   Route
   .put('users/:id', 'AuthController.update')
 
   // listagem de produtos de um vendedor 
-  Route
-  .get('produtos/id', 'ProductController.show')
 
-//Produtos, Categorias, Produtos_user
-Route.group(() => {
+  //Produtos, Categorias, Produtos_user
+  Route.group(() => {
     Route.resource("produtos", "ProductController")
         .apiOnly()
         .except("update");
 
-      Route.resource("categorias", "CategoriasController")
+    Route.resource("categorias", "CategoriasController")
         .apiOnly()
         .except("update");
   })
