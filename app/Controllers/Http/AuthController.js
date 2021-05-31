@@ -34,12 +34,8 @@ class AuthController {
         "online":"Precisa informar o status"
     }
 
-    
-     
     const validate = await validateAll(request.all(), rules, messages);
-    
 
-    
     if(validate._data.tipo_user == 1){
       console.log(validate._data.tipo_user)
       if(validate.fails()){

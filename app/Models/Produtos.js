@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Produtos extends Model {
     
-    categorias(){
+    categoria(){
         return this.belongsTo('App/Models/Categorias')
     }
     user(){

@@ -22,7 +22,7 @@ class ProdutosController {
       
     async show({params}){
       const user = await User.findOrFail(params.id);
-      const produtos = await user.produtos().with("categorias").fetch();
+      const produtos = await user.produtos().with("categoria").fetch();
       return produtos;
     }
 
