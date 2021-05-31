@@ -1,5 +1,7 @@
 "use strict";
 
+const ProdutosController = require("../app/Controllers/Http/ProductController");
+
 
 const Route = use("Route");
 
@@ -25,6 +27,10 @@ Route
 
   Route
   .put('users/:id', 'AuthController.update')
+
+  // listagem de produtos de um vendedor 
+  Route
+  .get('produtos/id', 'ProductController.show')
 
 //Produtos, Categorias, Produtos_user
 Route.group(() => {

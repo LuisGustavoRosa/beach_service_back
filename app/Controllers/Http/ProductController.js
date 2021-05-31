@@ -1,6 +1,7 @@
 'use strict'
 const Produtos = use("App/Models/Produtos");
 const Produto_User = use ("App/Models/ProdutosUser")
+const User = use("App/Models/User");
 
 
 class ProdutosController {
@@ -20,7 +21,9 @@ class ProdutosController {
       }
       
     async show({params}){
-        return await Produtos.query(params.id)
+      const user = await User.findOrFail(params.id);
+      const produtos = await user.produtos().fetch();
+      return produtos;
     }
 
     async update ({params, request}){
