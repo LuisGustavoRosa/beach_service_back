@@ -4,10 +4,30 @@ const {validateAll} = use("Validator");
 const Pedido = use("App/Models/Pedido");
 
 class PedidoController {
-    async store ({ request}) {
-        const user_produtos = request.input('produtos');
-        const produto_user = await Produto_User.createMany( user_produtos)
-        return produto_user;
+    async store ({ request,response}) {
+        const rules = {
+            dataHoraCriado:'required',
+            dataHoraFinalizado :'required',
+            lat:'required',
+            lng:'required',
+            id_consumidor:'required',
+            id_vendedor:'required',
+          }
+          const  messages ={
+            "dataHoraCriado.required":'dataHoraCriado deve ser informado',
+            "lat.required":' latitude deve ser informado',
+            "lng.required": 'longitude deve ser informado',
+            "id_consumidor.required":' id do consumidor deve ser informado',
+            "id_vendedor.required":" id do vendedor deve ser informado",
+        }
+
+        const validate = await validateAll(request.all(), rules, messages);
+        if(validate.fails()){
+            return response.status(401).send({message: validate.messages()})
+          }
+          const data = request.only(['dataHoraCriado', 'dataHoraFinalizado','lat','lng','id_consumidor','id_vendedor'])
+          const pedido = await Pedido.create(data);
+          return pedido;
       }
 
 

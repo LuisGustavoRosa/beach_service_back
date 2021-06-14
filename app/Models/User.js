@@ -33,13 +33,7 @@ class User extends Model {
   produtos_user() {
     return this.hasMany("App/Models/ProdutosUser");
   }
-/* 
-  @online({
-    serialize:(value?:Number)=>{
-      return Boolean(value)
-    },
-  })
-} */
+
 }
 
 
