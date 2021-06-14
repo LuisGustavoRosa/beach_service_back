@@ -1,11 +1,9 @@
 'use strict'
-const Produtos = use("App/Models/Produtos");
-const Produto_User = use ("App/Models/ProdutosUser")
-const User = use("App/Models/User");
 
+const {validateAll} = use("Validator");
+const Pedido = use("App/Models/Pedido");
 
-class ProdutosController {
-
+class PedidoController {
     async store ({ request}) {
         const user_produtos = request.input('produtos');
         const produto_user = await Produto_User.createMany( user_produtos)
@@ -43,4 +41,4 @@ class ProdutosController {
      }   
 }
 
-module.exports = ProdutosController
+module.exports = PedidoController

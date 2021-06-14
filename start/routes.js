@@ -43,6 +43,14 @@ Route
         .except("update");
   })
 
+ //Pedidos, pedido_produto
+  Route.group(() => {
+    Route.resource("pedido", "PedidoController")
+        .apiOnly()
+        .except("update");
+
+  })
+
 
 
 

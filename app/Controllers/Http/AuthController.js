@@ -103,7 +103,7 @@ class AuthController {
           })
           return database
         }else if(data.tipo_user== 0){
-          const users =  await User.query().with('produtos.categorias').where(
+          const users =  await User.query().with('produtos.categoria').where(
             function (){
               this.where('online', 1)
               this.where('tipo_user', 1)
