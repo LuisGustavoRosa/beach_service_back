@@ -2,6 +2,7 @@
 
 const Hash = use("Hash");
 const Model = use("Model");
+const Database=use("Database");
 
 class User extends Model {
   static boot() {
@@ -34,6 +35,18 @@ class User extends Model {
     return this.hasMany("App/Models/ProdutosUser");
   }
 
+  static scopeNearBy (query, lat, lng, distance) {
+    const haversine = `(6371 * acos(cos(radians(${lat}))
+      * cos(radians(lat))
+      * cos(radians(lng)
+      - radians(${lng}))
+      + sin(radians(${lat}))
+      * sin(radians(lat))))`
+  
+    return query
+      .select('*', Database.raw(`${haversine} as distance`))
+      .whereRaw(`${haversine} < ${distance}`)
+  }
 }
 
 

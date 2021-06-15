@@ -93,21 +93,24 @@ class AuthController {
   }
 
    async index ({request}){
-    const data = request.only(['tipo_user'])
+
+    const {tipo_user, lat, lng} = request.all()
     
-        if(data.tipo_user == 1){
+        if(tipo_user == 1){
           const database = await Database.from('users')
           .where(function () {
             this.where('online', 1)
             this.where('tipo_user', 0 )
-          })
+          }).nearBy(lat, lng, 5).fetch()
+
           return database
-        }else if(data.tipo_user== 0){
+        }else if(tipo_user== 0){
           const users =  await User.query().with('produtos.categoria').where(
             function (){
               this.where('online', 1)
               this.where('tipo_user', 1)
-            }).fetch()
+            }).nearBy(lat, lng, 5).fetch()
+
           return users
         }
       } 
