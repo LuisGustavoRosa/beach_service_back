@@ -97,13 +97,13 @@ class AuthController {
     const {tipo_user, lat, lng} = request.all()
     
         if(tipo_user == 1){
-          const database = await Database.from('users')
+          const users =  await User.query()
           .where(function () {
             this.where('online', 1)
             this.where('tipo_user', 0 )
           }).nearBy(lat, lng, 5).fetch()
 
-          return database
+          return users
         }else if(tipo_user== 0){
           const users =  await User.query().with('produtos.categoria').where(
             function (){

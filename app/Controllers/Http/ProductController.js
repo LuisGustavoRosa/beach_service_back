@@ -7,6 +7,7 @@ const User = use("App/Models/User");
 class ProdutosController {
 
     async store ({ request}) {
+
         const user_produtos = request.input('produtos');
         const produto_user = await Produto_User.createMany( user_produtos)
         return produto_user;
@@ -34,12 +35,12 @@ class ProdutosController {
         return Produtos;
     }
 
-    async destroy({params}){
-        const Produtos = await Produtos.findOrFail(params.id);
-        await Produtos.delete();
-        return {
-            message: 'Produto Excluido'
-        }
+    async destroy({params,request}){
+        var produto_user = await Produto_User.findOrFail(params.id);
+        await produto_user.delete();
+        const user_produtos = request.input('produtos');
+        produto_user = await Produto_User.createMany( user_produtos)
+        return produto_user;
      }   
 }
 
