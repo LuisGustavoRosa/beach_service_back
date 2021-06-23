@@ -36,12 +36,16 @@ Route
   Route.group(() => {
     Route.resource("produtos", "ProductController")
         .apiOnly()
-        .except("update");
 
     Route.resource("categorias", "CategoriasController")
         .apiOnly()
         .except("update");
   })
+
+  Route
+  .put('produtos', 'ProductController.update')
+  Route
+  .delete('produtos', 'ProductController.destroy')
 
  //Pedidos, pedido_produto
   Route.group(() => {

@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class ProdutosUserSchema extends Schema {
   up () {
     this.create('produtos_users', (table) => {
-      table.integer('id').unsigned().references('id').inTable('users').notNull()
+      table.integer('user_id').unsigned().references('id').inTable('users').notNull()
       table.integer('produto_id').unsigned().references('id').inTable('produtos').notNull()
       table.timestamps()
     })

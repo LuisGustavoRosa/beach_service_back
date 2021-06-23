@@ -110,7 +110,7 @@ class AuthController {
               this.where('online', 1)
               this.where('tipo_user', 1)
             }).nearBy(lat, lng, 5).fetch()
-
+            console.log(users)
           return users
         }
       } 

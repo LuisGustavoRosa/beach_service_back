@@ -2,6 +2,7 @@
 const Produtos = use("App/Models/Produtos");
 const Produto_User = use ("App/Models/ProdutosUser")
 const User = use("App/Models/User");
+const Database = use('Database')
 
 
 class ProdutosController {
@@ -27,21 +28,20 @@ class ProdutosController {
       return produtos;
     }
 
-    async update ({params, request}){
-        const Produtos = await Produtos.findOrFail(params.id);
-        const dataToUpdate= request.only(['descricao']);
-        Produtos.merge(dataToUpdate);
-        await Produtos.save();
-        return Produtos;
+    async update ({ request}){
+      const user_produtos = request.input('produtos');
+      var produto_user =  await Produto_User.query()
+      .where(function () {
+        this.where('user_id', user_produtos[0].user_id)
+      }).delete()
+        produto_user = await Produto_User.createMany( user_produtos)
+        return produto_user;
     }
 
     async destroy({params,request}){
-        var produto_user = await Produto_User.findOrFail(params.id);
-        await produto_user.delete();
-        const user_produtos = request.input('produtos');
-        produto_user = await Produto_User.createMany( user_produtos)
-        return produto_user;
-     }   
-}
+  
+    }
+    
+  }
 
 module.exports = ProdutosController
