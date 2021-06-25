@@ -7,8 +7,8 @@ class PedidoSchema extends Schema {
   up () {
     this.create('pedidos', (table) => {
       table.increments()
-      table.date('dataHoraCriado').notNullable()
-      table.date('dataHoraFinalizado')
+      table.dateTime('data_hora_criado').notNullable()
+      table.dateTime('data_hora_finalizado')
       table.decimal('lat',15,8).notNullable()
       table.decimal('lng',15,8).notNullable()
       table.integer('id_consumidor').unsigned().references('id').inTable('users').notNull()

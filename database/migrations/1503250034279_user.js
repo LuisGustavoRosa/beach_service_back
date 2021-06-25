@@ -16,7 +16,7 @@ class UserSchema extends Schema {
       table.integer('tipo_user', 0).notNullable()
       table.decimal('lat',15,8)
       table.decimal('lng',15,8)
-      table.decimal('distance')
+      table.double('distance')
       table.boolean('online').default(false)
       table.timestamps()
     })

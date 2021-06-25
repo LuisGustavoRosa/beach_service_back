@@ -1,20 +1,23 @@
 'use strict'
 
+var moment = require('moment'); // require
+
 const {validateAll} = use("Validator");
 const Pedido = use("App/Models/Pedido");
+
 
 class PedidoController {
     async store ({ request,response}) {
         const rules = {
-            dataHoraCriado:'required',
-            dataHoraFinalizado :'required',
+            data_hora_criado:'required',
+            data_hora_finalizado :'required',
             lat:'required',
             lng:'required',
             id_consumidor:'required',
             id_vendedor:'required',
           }
           const  messages ={
-            "dataHoraCriado.required":'dataHoraCriado deve ser informado',
+            "data_hora_criado.required":'dataHoraCriado deve ser informado',
             "lat.required":' latitude deve ser informado',
             "lng.required": 'longitude deve ser informado',
             "id_consumidor.required":' id do consumidor deve ser informado',
@@ -25,10 +28,17 @@ class PedidoController {
         if(validate.fails()){
             return response.status(401).send({message: validate.messages()})
           }
-          const data = request.only(['dataHoraCriado', 'dataHoraFinalizado','lat','lng','id_consumidor','id_vendedor'])
+        
+          const data = request.only(['data_hora_criado', 'data_hora_finalizado','lat','lng','id_consumidor','id_vendedor'])
+          data.data_hora_criado= moment().format();
           const pedido = await Pedido.create(data);
+          console.log(data.data_hora_criado)
           return pedido;
-      }
+        }
+        
+
+      
+    
 
 
     async index() {

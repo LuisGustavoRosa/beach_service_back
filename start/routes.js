@@ -37,7 +37,15 @@ Route
     Route.resource("produtos", "ProductController")
         .apiOnly()
 
-    Route.resource("categorias", "CategoriasController")
+    
+        Route.resource("categorias", "CategoriasController")
+        .apiOnly()
+        .except("update");
+    
+        Route.resource("pedidos_produto", "PedidoProdutoController")
+        .apiOnly()
+    
+        Route.resource("pedido", "PedidoController")
         .apiOnly()
         .except("update");
   })
@@ -47,13 +55,7 @@ Route
   Route
   .delete('produtos', 'ProductController.destroy')
 
- //Pedidos, pedido_produto
-  Route.group(() => {
-    Route.resource("pedido", "PedidoController")
-        .apiOnly()
-        .except("update");
 
-  })
 
 
 

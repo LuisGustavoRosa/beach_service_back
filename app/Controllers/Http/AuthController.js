@@ -7,6 +7,10 @@ const Database = use('Database')
 
 
 class AuthController {
+    
+  
+  
+   
 
   async store({ request, response }) {
 
@@ -93,7 +97,7 @@ class AuthController {
   }
 
    async index ({request}){
-
+    
     const {tipo_user, lat, lng} = request.all()
     
         if(tipo_user == 1){
@@ -101,15 +105,14 @@ class AuthController {
           .where(function () {
             this.where('online', 1)
             this.where('tipo_user', 0 )
-          }).nearBy(lat, lng, 5).fetch()
-
+          }).nearBy(lat, lng, 5*1000).fetch()
           return users
         }else if(tipo_user== 0){
           const users =  await User.query().with('produtos.categoria').where(
             function (){
               this.where('online', 1)
               this.where('tipo_user', 1)
-            }).nearBy(lat, lng, 5).fetch()
+            }).nearBy(lat, lng, 5*1000  ).fetch()
             console.log(users)
           return users
         }
