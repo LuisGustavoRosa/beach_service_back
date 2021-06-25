@@ -34,6 +34,11 @@ class User extends Model {
   produtos_user() {
     return this.hasMany("App/Models/ProdutosUser");
   }
+  pedidos() {
+    return this.belongsToMany("App/Models/Pedido").pivotTable(
+      'pedido_produtos'
+    );
+  }
 
   static scopeNearBy (query, lat, lng, distance) {
     const haversine = `(6371 * acos(cos(radians(${lat}))
@@ -42,10 +47,14 @@ class User extends Model {
       - radians(${lng}))
       + sin(radians(${lat}))
       * sin(radians(lat))))`
-  
+      
+      
     return query
+    
       .select('*', Database.raw(`${haversine} as distance`))
       .whereRaw(`${haversine} < ${distance}`)
+      
+      
   }
 }
 

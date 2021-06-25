@@ -4,6 +4,9 @@ var moment = require('moment'); // require
 
 const {validateAll} = use("Validator");
 const Pedido = use("App/Models/Pedido");
+const User = use("App/Models/User");
+const Produtos = use("App/Models/Produtos");
+const pedido_produto = use("App/Models/PedidoProduto");
 
 
 class PedidoController {
@@ -32,26 +35,25 @@ class PedidoController {
           const data = request.only(['data_hora_criado', 'data_hora_finalizado','lat','lng','id_consumidor','id_vendedor'])
           data.data_hora_criado= moment().format();
           const pedido = await Pedido.create(data);
-          console.log(data.data_hora_criado)
-          return pedido;
+          
+          const produtoPedido = request.input('pedidos');
+          produtoPedido.map(element => {
+            element.pedido_id = pedido.id
+          });
+          console.log(produtoPedido)
+          const pedido_produtoo = await pedido_produto.createMany(produtoPedido)
+
+          return pedido 
         }
-        
-
-      
-    
-
-
-    async index() {
-        const produtos = await Produtos.query()
-          .with("categoria")
-          .fetch();
-        return produtos;
-      }
+     
       
     async show({params}){
+       
       const user = await User.findOrFail(params.id);
-      const produtos = await user.produtos().with("categoria").fetch();
-      return produtos;
+      console.log(user)
+      const pedido = await user.produtos().with("pedidos").fetch()
+      console.log(pedido)
+      return pedido
     }
 
     async update ({params, request}){

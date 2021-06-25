@@ -11,6 +11,11 @@ class Produtos extends Model {
     user(){
         return this.belongsTo('App/Models/User')
     }
+    pedidos() {
+        return this.belongsToMany("App/Models/Pedido").pivotTable(
+          'pedido_produtos'
+        );       
+}
 }
 
 
