@@ -12,15 +12,14 @@ const pedido_produto = use("App/Models/PedidoProduto");
 class PedidoController {
     async store ({ request,response}) {
         const rules = {
-            data_hora_criado:'required',
-            data_hora_finalizado :'required',
+           
             lat:'required',
             lng:'required',
             id_consumidor:'required',
             id_vendedor:'required',
           }
           const  messages ={
-            "data_hora_criado.required":'dataHoraCriado deve ser informado',
+          
             "lat.required":' latitude deve ser informado',
             "lng.required": 'longitude deve ser informado',
             "id_consumidor.required":' id do consumidor deve ser informado',
