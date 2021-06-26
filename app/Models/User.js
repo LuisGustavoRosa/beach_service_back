@@ -37,7 +37,7 @@ class User extends Model {
   pedidos() {
     return this.belongsToMany("App/Models/Pedido").pivotTable(
       'pedido_produtos'
-    );
+    );   
   }
 
   static scopeNearBy (query, lat, lng, distance) {

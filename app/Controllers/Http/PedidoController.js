@@ -46,12 +46,10 @@ class PedidoController {
         }
      
       
-    async show({params}){
+    async index({}){
        
-      const user = await User.findOrFail(params.id);
-      console.log(user)
-      const pedido = await user.produtos().with("pedidos").fetch()
-      console.log(pedido)
+      const pedido = await Pedido.query()
+      .with('produtos.categoria').fetch()
       return pedido
     }
 

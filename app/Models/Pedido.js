@@ -4,15 +4,21 @@
 const Model = use('Model')
 
 class Pedido extends Model {
-    pedidos() {
-        return this.belongsToMany("App/Models/Pedidos").pivotTable(
-          'pedido_produtos'
-        );       
-}
+
 produtos() {
-  return this.hasMany("App/Models/Produtos");
+  return this.belongsToMany("App/Models/Produtos").pivotTable(
+    'pedido_produtos'
+  );
+}
+pedidos() {
+  return this.belongsToMany("App/Models/Pedido").pivotTable(
+    'pedido_produtos'
+  );  
+}
+  user() {
+    return this.belongsToMany("App/Models/Produtos");
+  }
 }
 
-}
 
 module.exports = Pedido

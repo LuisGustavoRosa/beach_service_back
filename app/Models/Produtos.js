@@ -15,7 +15,7 @@ class Produtos extends Model {
         return this.belongsToMany("App/Models/Pedido").pivotTable(
           'pedido_produtos'
         );       
-}
+        }
 }
 
 
