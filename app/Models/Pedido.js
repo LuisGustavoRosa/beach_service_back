@@ -10,15 +10,11 @@ produtos() {
     'pedido_produtos'
   );
 }
-pedidos() {
-  return this.belongsToMany("App/Models/Pedido").pivotTable(
-    'pedido_produtos'
-  );  
+user() {
+  return this.belongsToMany("App/Models/User").pivotTable(
+    'users' 
+  );
 }
-  user() {
-    return this.belongsToMany("App/Models/Produtos");
-  }
 }
-
 
 module.exports = Pedido

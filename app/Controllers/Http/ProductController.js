@@ -39,12 +39,12 @@ class ProdutosController {
       return produtos;
     }
 
-    async update ({ request}){
+   /*  async update ({ request}){
     
     }
 
-    async destroy({params,request}){
-    }
+    async destroy({params}){
+    } */
     
   }
 

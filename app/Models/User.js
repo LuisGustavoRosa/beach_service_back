@@ -28,17 +28,13 @@ class User extends Model {
 
   produtos() {
     return this.belongsToMany("App/Models/Produtos").pivotTable(
-      'produtos_users'
+      'produtos_users',
     );
   }
   produtos_user() {
     return this.hasMany("App/Models/ProdutosUser");
   }
-  pedidos() {
-    return this.belongsToMany("App/Models/Pedido").pivotTable(
-      'pedido_produtos'
-    );   
-  }
+  
 
   static scopeNearBy (query, lat, lng, distance) {
     const haversine = `(6371 * acos(cos(radians(${lat}))

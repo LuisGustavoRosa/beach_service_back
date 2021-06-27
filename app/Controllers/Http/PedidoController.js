@@ -1,6 +1,8 @@
 'use strict'
 
 var moment = require('moment'); // require
+const { query } = require('../../Models/Pedido');
+const Database=use("Database");
 
 const {validateAll} = use("Validator");
 const Pedido = use("App/Models/Pedido");
@@ -35,7 +37,7 @@ class PedidoController {
           data.data_hora_criado= moment().format();
           const pedido = await Pedido.create(data);
           
-          const produtoPedido = request.input('pedidos');
+          const produtoPedido = request.input('itens');
           produtoPedido.map(element => {
             element.pedido_id = pedido.id
           });
@@ -46,13 +48,35 @@ class PedidoController {
         }
      
       
-    async index({}){
-       
-      const pedido = await Pedido.query()
-      .with('produtos.categoria').fetch()
-      return pedido
-    }
+  /*   async index({request}){
 
+      
+      const id_user = request.only('id')
+      const user = await User.findOrFail(id_user.id)
+      const userJson = user.toJSON()
+      if(userJson.tipo_user == 1){
+        const pedido_= await Pedido.query().where('id_vendedor', userJson.id).with('produtos.categoria').fetch()
+        const pedidoJson = pedido_.toJSON()
+       pedidoJson.map(element => {
+          element.id_vendedor = userJson
+          
+        });
+       
+        return pedidoJson
+      
+      }else if(userJson.tipo_user == 0){
+        const pedido_= await Pedido.query().where('id_consumidor', userJson.id).with('produtos.categoria').fetch()
+        const pedidoJson = pedido_.toJSON()
+        const user = await User.findOrFail(pedidoJson[0].id_vendedor)
+        pedidoJson.map(element => {
+          element.id_consumidor = userJson
+        });
+        return pedidoJson
+      }
+      
+    } */
+
+/* 
     async update ({params, request}){
         const Produtos = await Produtos.findOrFail(params.id);
         const dataToUpdate= request.only(['descricao']);
@@ -68,6 +92,7 @@ class PedidoController {
             message: 'Produto Excluido'
         }
      }   
+} */
 }
 
 module.exports = PedidoController
