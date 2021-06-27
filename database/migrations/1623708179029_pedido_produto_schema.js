@@ -7,7 +7,7 @@ class PedidoProdutoSchema extends Schema {
   up () {
     this.create('pedido_produtos', (table) => {
       table.integer('pedido_id').unsigned().references('id').inTable('pedidos').notNull()
-      table.integer('produto_id').unsigned().references('id').inTable('produtos').notNull().unique()
+      table.integer('produto_id').unsigned().references('id').inTable('produtos').notNull()
       table.timestamps()
     })
   }
