@@ -47,11 +47,12 @@ Route
     
         Route.resource("pedido", "PedidoController")
         .apiOnly()
-        .except("update");
+       
   })
 
   Route
   .put('produtos', 'ProductController.update')
+  
   Route
   .delete('produtos', 'ProductController.destroy')
 

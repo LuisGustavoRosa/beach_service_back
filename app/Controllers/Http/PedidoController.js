@@ -76,23 +76,23 @@ class PedidoController {
       
     } */
 
-/* 
-    async update ({params, request}){
-        const Produtos = await Produtos.findOrFail(params.id);
-        const dataToUpdate= request.only(['descricao']);
-        Produtos.merge(dataToUpdate);
-        await Produtos.save();
-        return Produtos;
+ 
+    async update ({params}){
+
+      const pedido = await Pedido.findOrFail(params.id);
+      pedido.data_hora_finalizado = moment().format();
+      await pedido.save();
+      return pedido;
     }
 
-    async destroy({params}){
+    /* async destroy({params}){
         const Produtos = await Produtos.findOrFail(params.id);
         await Produtos.delete();
         return {
             message: 'Produto Excluido'
         }
-     }   
-} */
+     }    */
+
 }
 
 module.exports = PedidoController
