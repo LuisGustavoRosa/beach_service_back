@@ -38,13 +38,6 @@ class ProdutosController {
       const produtos = await user.produtos().with("categoria").fetch();
       return produtos;
     }
-
-   /*  async update ({ request}){
-    
-    }
-
-    async destroy({params}){
-    } */
     
   }
 

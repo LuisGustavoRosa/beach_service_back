@@ -11,9 +11,7 @@ produtos() {
   );
 }
 user() {
-  return this.belongsToMany("App/Models/User").pivotTable(
-    'users' 
-  );
+  return this.hasMany("App/Models/User");
 }
 }
 

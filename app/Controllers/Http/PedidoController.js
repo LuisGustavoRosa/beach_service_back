@@ -48,33 +48,69 @@ class PedidoController {
         }
      
       
-  /*   async index({request}){
+  async index({request}) {
+    const json = request.only(["id"])
 
+    const sql = await Pedido.query()
+      .select('pedidos.id')
+      .select('pedidos.lat')
+      .select('pedidos.lng')
+      .select('pedidos.data_hora_criado')
+      .select('pedidos.data_hora_finalizado')
+      .select('user_vendedor.id as vendedor_id')
+      .select('user_vendedor.nome as vendedor_nome')
+      .select('user_vendedor.email as vendedor_email')
+      .select('user_vendedor.empresa as vendedor_empresa')
+      .select('user_vendedor.telefone as vendedor_telefone')
+      .select('user_consumidor.id as consumidor_id')
+      .select('user_consumidor.nome as consumidor_nome')
+      .select('user_consumidor.email as consumidor_email')
+      .select('user_consumidor.telefone as consumidor_telefone')
+      .from('pedidos')
+      .innerJoin({user_consumidor: 'users'}, (query) => {
+        query.on('user_consumidor.id', '=', 'pedidos.id_consumidor')
+      })
+      .innerJoin({user_vendedor: 'users'}, (query) => {
+        query.on('user_vendedor.id', '=', 'pedidos.id_vendedor')
+      })
+      .whereRaw('pedidos.id_consumidor = ? OR pedidos.id_vendedor = ?', [json.id, json.id])
+      .with('produtos.categoria')
+      .fetch();
       
-      const id_user = request.only('id')
-      const user = await User.findOrFail(id_user.id)
-      const userJson = user.toJSON()
-      if(userJson.tipo_user == 1){
-        const pedido_= await Pedido.query().where('id_vendedor', userJson.id).with('produtos.categoria').fetch()
-        const pedidoJson = pedido_.toJSON()
-       pedidoJson.map(element => {
-          element.id_vendedor = userJson
-          
+      if (sql != null) {
+        const json = sql.toJSON();
+
+        json.map(e => {
+          e.user_consumidor = {
+            "id": e.vendedor_id,
+            "nome": e.vendedor_nome,
+            "email": e.vendedor_email,
+            "empresa": e.vendedor_empresa,
+            "telefone": e.vendedor_telefone
+          },
+          delete e.vendedor_id;
+          delete e.vendedor_nome;
+          delete e.vendedor_email;
+          delete e.vendedor_empresa;
+          delete e.vendedor_telefone;
+
+          e.user_vendedor = {
+            "id": e.consumidor_id,
+            "nome": e.consumidor_nome,
+            "email": e.consumidor_email,
+            "telefone": e.consumidor_telefone
+          }
+          delete e.consumidor_id;
+          delete e.consumidor_nome;
+          delete e.consumidor_email;
+          delete e.consumidor_telefone;
         });
-       
-        return pedidoJson
-      
-      }else if(userJson.tipo_user == 0){
-        const pedido_= await Pedido.query().where('id_consumidor', userJson.id).with('produtos.categoria').fetch()
-        const pedidoJson = pedido_.toJSON()
-        const user = await User.findOrFail(pedidoJson[0].id_vendedor)
-        pedidoJson.map(element => {
-          element.id_consumidor = userJson
-        });
-        return pedidoJson
+
+        return json;
       }
       
-    } */
+    return null;
+  }
 
  
     async update ({params}){

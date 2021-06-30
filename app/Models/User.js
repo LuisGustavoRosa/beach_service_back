@@ -34,6 +34,10 @@ class User extends Model {
   produtos_user() {
     return this.hasMany("App/Models/ProdutosUser");
   }
+
+  pedido() {
+    return this.belongsToMany("App/Models/Pedido");
+  }
   
 
   static scopeNearBy (query, lat, lng, distance) {
