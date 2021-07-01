@@ -41,7 +41,7 @@ class PedidoController {
     data.status = 'em aberto'
     const pedido = await Pedido.create(data);
 
-    const produtoPedido = request.input('itens');
+    const produtoPedido = request.input('produtos');
     produtoPedido.map(element => {
       element.pedido_id = pedido.id
     });
@@ -104,6 +104,7 @@ class PedidoController {
           "nome": e.consumidor_nome,
           "email": e.consumidor_email,
           "telefone": e.consumidor_telefone
+          
         }
         delete e.consumidor_id;
         delete e.consumidor_nome;
@@ -112,6 +113,7 @@ class PedidoController {
       });
 
       return json;
+
     }
 
     return null;
