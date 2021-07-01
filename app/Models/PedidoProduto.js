@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class PedidoProduto extends Model {
-   
+
 
 }
 

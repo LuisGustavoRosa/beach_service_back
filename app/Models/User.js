@@ -2,7 +2,7 @@
 
 const Hash = use("Hash");
 const Model = use("Model");
-const Database=use("Database");
+const Database = use("Database");
 
 class User extends Model {
   static boot() {
@@ -14,8 +14,8 @@ class User extends Model {
       }
     });
   }
-  
-  static formatDates (field, value) {
+
+  static formatDates(field, value) {
     if (field === 'dob') {
       return value.format('YYYY-MM-DD')
     }
@@ -38,23 +38,23 @@ class User extends Model {
   pedido() {
     return this.belongsToMany("App/Models/Pedido");
   }
-  
 
-  static scopeNearBy (query, lat, lng, distance) {
+
+  static scopeNearBy(query, lat, lng, distance) {
     const haversine = `(6371 * acos(cos(radians(${lat}))
       * cos(radians(lat))
       * cos(radians(lng)
       - radians(${lng}))
       + sin(radians(${lat}))
       * sin(radians(lat))))`
-      
-      
+
+
     return query
-    
+
       .select('*', Database.raw(`${haversine} as distance`))
       .whereRaw(`${haversine} < ${distance}`)
-      
-      
+
+
   }
 }
 

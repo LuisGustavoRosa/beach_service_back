@@ -5,14 +5,14 @@ const Model = use('Model')
 
 class Pedido extends Model {
 
-produtos() {
-  return this.belongsToMany("App/Models/Produtos").pivotTable(
-    'pedido_produtos'
-  );
-}
-user() {
-  return this.hasMany("App/Models/User");
-}
+  produtos() {
+    return this.belongsToMany("App/Models/Produtos").pivotTable(
+      'pedido_produtos'
+    );
+  }
+  user() {
+    return this.hasMany("App/Models/User");
+  }
 }
 
 module.exports = Pedido

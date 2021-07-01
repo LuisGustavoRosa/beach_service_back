@@ -4,13 +4,13 @@ const Categorias = use("App/Models/Categorias");
 
 class CategoriaController {
 
- 
-  async index(){
-    const categorias= await Categorias.all();
+
+  async index() {
+    const categorias = await Categorias.all();
     return categorias;
   }
 
-  async create ({ request, response, view }) {
+  async create({ request, response, view }) {
   }
 
   async store({ request }) {

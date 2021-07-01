@@ -4,15 +4,14 @@
 const Schema = use('Schema')
 
 class PedidoProdutoSchema extends Schema {
-  up () {
+  up() {
     this.create('pedido_produtos', (table) => {
       table.integer('pedido_id').unsigned().references('id').inTable('pedidos').notNull()
       table.integer('produto_id').unsigned().references('id').inTable('produtos').notNull()
       table.timestamps()
     })
   }
-
-  down () {
+  down() {
     this.drop('pedido_produtos')
   }
 }

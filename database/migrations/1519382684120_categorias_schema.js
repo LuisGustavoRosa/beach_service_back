@@ -3,15 +3,15 @@
 const Schema = use('Schema')
 
 class CategorySchema extends Schema {
-  up () {
+  up() {
     this.create('categorias', (table) => {
-        table.increments()  
-        table.string('descricao').notNullable()
-        table.timestamps()
+      table.increments()
+      table.string('descricao').notNullable()
+      table.timestamps()
     })
   }
 
-  down () {
+  down() {
     this.drop('categorias')
   }
 }

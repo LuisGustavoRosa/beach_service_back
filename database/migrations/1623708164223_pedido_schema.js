@@ -4,11 +4,12 @@
 const Schema = use('Schema')
 
 class PedidoSchema extends Schema {
-  up () {
+  up() {
     this.create('pedidos', (table) => {
       table.increments()
       table.dateTime('data_hora_criado')
       table.dateTime('data_hora_finalizado')
+      table.integer('status').notNullable()
       table.double('lat').notNullable()
       table.double('lng').notNullable()
       table.integer('id_consumidor').unsigned().references('id').inTable('users').notNull()
@@ -17,7 +18,7 @@ class PedidoSchema extends Schema {
     })
   }
 
-  down () {
+  down() {
     this.drop('pedidos')
   }
 }
