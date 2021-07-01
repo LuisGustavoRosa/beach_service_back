@@ -86,7 +86,7 @@ class PedidoController {
       const json = sql.toJSON();
 
       json.map(e => {
-        e.user_consumidor = {
+        e.user_vendedor = {
           "id": e.vendedor_id,
           "nome": e.vendedor_nome,
           "email": e.vendedor_email,
@@ -99,7 +99,7 @@ class PedidoController {
         delete e.vendedor_empresa;
         delete e.vendedor_telefone;
 
-        e.user_vendedor = {
+        e.user_consumidor = {
           "id": e.consumidor_id,
           "nome": e.consumidor_nome,
           "email": e.consumidor_email,
