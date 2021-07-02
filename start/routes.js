@@ -19,6 +19,8 @@ Route.get("users", 'AuthController.index')
   .middleware('auth')
 Route.put("users", 'AuthController.update')
   .middleware('auth')
+Route.post("produtos","ProductController.store")
+
 
 
 // listagem de produtos de um vendedor 
