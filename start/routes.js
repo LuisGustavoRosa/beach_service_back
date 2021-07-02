@@ -29,7 +29,7 @@ Route.get("produtos", "ProductController.index")
 Route.get("produtos/:id", "ProductController.show")
   .middleware('auth')
 Route.put("produtos", "ProductController.store")
-  .middleware('auth')
+  
 
 
 
