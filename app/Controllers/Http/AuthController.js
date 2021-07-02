@@ -105,7 +105,7 @@ class AuthController {
         .where(function () {
           this.where('online', 1)
           this.where('tipo_user', 0)
-        }).nearBy(lat, lng, 2).fetch()
+        }).nearBy(lat, lng, 1000).fetch()
       const userJSON_ = await users.toJSON()
       const distance_ = (userJSON_[0].distance * 1000)
       const distance = parseInt(distance_)
@@ -118,7 +118,7 @@ class AuthController {
         function () {
           this.where('online', 1)
           this.where('tipo_user', 1)
-        }).nearBy(lat, lng, 5).fetch()
+        }).nearBy(lat, lng, 1000).fetch()
       const userJSON_ = await users.toJSON()
       const distance_ = (userJSON_[0].distance * 1000)
       const distance = parseInt(distance_)
