@@ -17,7 +17,7 @@ Route.group(() => {
 Route.post("users", "AuthController.store")
 Route.get("users", 'AuthController.index')
   .middleware('auth')
-Route.get("users/:id", 'AuthController.index')
+Route.get("users/:id", 'AuthController.show')
   .middleware('auth')
 Route.put("users/:id", 'AuthController.update')
   .middleware('auth')
