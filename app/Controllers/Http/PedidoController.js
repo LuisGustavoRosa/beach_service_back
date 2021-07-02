@@ -38,7 +38,7 @@ class PedidoController {
 
     const data = request.only(['data_hora_criado', 'data_hora_finalizado', 'lat', 'lng', 'status', 'id_consumidor', 'id_vendedor'])
     data.data_hora_criado = moment().format();
-    data.status = 'em aberto'
+    data.status = 1
     const pedido = await Pedido.create(data);
 
     const produtoPedido = request.input('produtos');
