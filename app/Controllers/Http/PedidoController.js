@@ -120,29 +120,31 @@ class PedidoController {
   }
 
 
-  async update({ params, request }) {
+  async update({ params, request ,response}) {
     const status = request.only('status')
     console.log(status.status)
     const pedido_ = await Pedido.findOrFail(params.id)
-    var pedidoJson = pedido_.toJSON()
-    const pedido = pedidoJson
+    const pedidoJson = pedido_.toJSON()
+    
     
   
     if (status.status == 0) {
-      pedido.status = 'cancelado'
+      pedidoJson.status = 0
     } else if (status.status == 1) {
-      pedido.status = 'em aberto'
+      pedidoJson.status = 1
     } else if (status.status == 2) {
-      pedido.status = 'aceito'
+      pedidoJson.status = 2
     } else if (status.status == 3 ) {
-      pedido.status = 'finalizado'
-      pedido.data_hora_finalizado = moment().format();
+      pedidoJson.status = 3
+      pedidoJson.data_hora_finalizado = moment().format();
+    }else{
+      console.log('Status Inválido');
+      response.status(500).send('Status Inválido');
     }
     pedido_.merge(pedidoJson);
     await pedido_.save();
     return pedido_;
 
-    
   }
 
   async pedido_finalizado({ params }) {
