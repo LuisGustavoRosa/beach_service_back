@@ -9,22 +9,17 @@ const Route = use("Route");
 Route
   .post('users/auth', 'AuthController.authenticate')
 
-//Rota que faz o registro do usuário
-Route
-  //.post("users", "AuthController.store")
-  .post("users", "AuthController.store")
-  .middleware('auth')
-
-
-//Rota que preciso passar um id e me retorna o usuário daquele id
-
 Route.group(() => {
-  Route.resource("users", "AuthController")
-    .apiOnly()
   Route.resource("pedido", "PedidoController")
     .apiOnly()
 }).middleware('auth')
-Route.put("pedido_finalizado/:id", "PedidoController.pedido_finalizado")
+
+Route.post("users", "AuthController.store")
+Route.get("users", 'AuthController.index')
+  .middleware('auth')
+Route.put("users", 'AuthController.update')
+  .middleware('auth')
+
 
 // listagem de produtos de um vendedor 
 
