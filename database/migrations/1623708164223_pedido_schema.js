@@ -9,7 +9,7 @@ class PedidoSchema extends Schema {
       table.increments()
       table.dateTime('data_hora_criado')
       table.dateTime('data_hora_finalizado')
-      table.string('status').notNullable()
+      table.integer('status').notNullable()
       table.double('lat').notNullable()
       table.double('lng').notNullable()
       table.integer('id_consumidor').unsigned().references('id').inTable('users').notNull()
