@@ -107,10 +107,10 @@ class AuthController {
           this.where('tipo_user', 0)
         }).nearBy(lat, lng, 1000).fetch()
       const userJSON_ = await users.toJSON()
-      userJSON_.map(element=>{
-        element.distance = element.distance *1000
-      })
-     
+      const distance_ = (userJSON_[0].distance * 1000)
+      const distance = parseInt(distance_)
+      userJSON_[0].distance = distance
+      return userJSON_
 
 
     } else if (tipo_user == 0) {
