@@ -36,7 +36,7 @@ class PedidoController {
       return response.status(401).send({ message: validate.messages() })
     }
 
-    const data = request.only(['data_hora_criado', 'data_hora_finalizado', 'lat', 'lng', 'status', 'id_consumidor', 'id_vendedor'])
+    const data = request.only(['data_hora_criado', 'data_hora_finalizado', 'lat', 'lng', 'status', 'id_consumidor', 'id_vendedor','distance'])
     data.data_hora_criado = moment().format();
     data.status = 1
     const pedido = await Pedido.create(data);
@@ -60,6 +60,7 @@ class PedidoController {
       .select('pedidos.lat')
       .select('pedidos.lng')
       .select('pedidos.status')
+      .select('pedidos.distance')
       .select('pedidos.data_hora_criado')
       .select('pedidos.data_hora_finalizado')
       .select('user_vendedor.id as vendedor_id')

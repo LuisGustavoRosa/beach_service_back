@@ -12,6 +12,7 @@ class PedidoSchema extends Schema {
       table.integer('status').notNullable()
       table.double('lat').notNullable()
       table.double('lng').notNullable()
+      table.double('distance').notNullable()
       table.integer('id_consumidor').unsigned().references('id').inTable('users').notNull()
       table.integer('id_vendedor').unsigned().references('id').inTable('users').notNull()
       table.timestamps()
