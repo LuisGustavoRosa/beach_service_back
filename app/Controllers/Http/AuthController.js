@@ -109,7 +109,7 @@ class AuthController {
       const userJSON_ = await users.toJSON()
         
         userJSON_.map(e => {
-          e.distance = (e.distance * 1000)
+          e.distance = parseFloat((e.distance*1000).toFixed(2))
         })
         return userJSON_
      
@@ -121,11 +121,10 @@ class AuthController {
         }).nearBy(lat, lng, 1000).fetch()
          const userJSON_ = await users.toJSON()
         userJSON_.map(e => {
-          e.distance = (e.distance * 1000)
+          e.distance = parseFloat((e.distance*1000).toFixed(2))
         })
         return userJSON_
       }
-  
   
   }
   async update({ params, request }) {
