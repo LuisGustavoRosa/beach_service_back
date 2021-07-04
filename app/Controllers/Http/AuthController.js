@@ -107,46 +107,26 @@ class AuthController {
           this.where('tipo_user', 0)
         }).nearBy(lat, lng, 1000).fetch()
       const userJSON_ = await users.toJSON()
-
-      if (userJSON_[0] == null) {
-        console.log(userJSON_)
-        return {
-          message: 'Nenhum consumidor encontrado'
-        }
-      } else {
-        const userJSON_ = await users.toJSON()
+        
         userJSON_.map(e => {
           e.distance = (e.distance * 1000)
         })
         return userJSON_
-      }
-
-
-    } else if (tipo_user == 0) {
+     
+    }else if (tipo_user == 0) {
       const users = await User.query().with('produtos.categoria').where(
         function () {
           this.where('online', 1)
           this.where('tipo_user', 1)
         }).nearBy(lat, lng, 1000).fetch()
-      const userJSON_ = await users.toJSON()
-
-      if (userJSON_[0] == null) {
-        console.log(userJSON_)
-        return {
-          message: 'Nenhum vendedor encontrado'
-        }
-      } else {
-        const userJSON_ = await users.toJSON()
+         const userJSON_ = await users.toJSON()
         userJSON_.map(e => {
           e.distance = (e.distance * 1000)
         })
         return userJSON_
       }
-    }
-
-
-
-
+  
+  
   }
   async update({ params, request }) {
     const user = await User.findOrFail(params.id);
