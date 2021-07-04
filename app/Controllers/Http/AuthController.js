@@ -107,10 +107,19 @@ class AuthController {
           this.where('tipo_user', 0)
         }).nearBy(lat, lng, 1000).fetch()
       const userJSON_ = await users.toJSON()
-      const distance_ = (userJSON_[0].distance * 1000)
-      const distance = parseInt(distance_)
-      userJSON_[0].distance = distance
-      return userJSON_
+
+      if (userJSON_[0] == null) {
+        console.log(userJSON_)
+        return {
+          message: 'Nenhum consumidor encontrado'
+        }
+      } else {
+        const userJSON_ = await users.toJSON()
+        userJSON_.map(e => {
+          e.distance = (e.distance * 1000)
+        })
+        return userJSON_
+      }
 
 
     } else if (tipo_user == 0) {
@@ -120,13 +129,24 @@ class AuthController {
           this.where('tipo_user', 1)
         }).nearBy(lat, lng, 1000).fetch()
       const userJSON_ = await users.toJSON()
-      const distance_ = (userJSON_[0].distance * 1000)
-      const distance = parseInt(distance_)
-      userJSON_[0].distance = distance
-      return userJSON_
 
-
+      if (userJSON_[0] == null) {
+        console.log(userJSON_)
+        return {
+          message: 'Nenhum vendedor encontrado'
+        }
+      } else {
+        const userJSON_ = await users.toJSON()
+        userJSON_.map(e => {
+          e.distance = (e.distance * 1000)
+        })
+        return userJSON_
+      }
     }
+
+
+
+
   }
   async update({ params, request }) {
     const user = await User.findOrFail(params.id);
