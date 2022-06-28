@@ -27,11 +27,12 @@
     "@adonisjs/validator": "^5.1.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "i": "^0.3.7",
     "jwt-encode": "^1.0.1",
     "knex": "^0.14.6",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
-    "pg": "^7.4.3"
+    "pg": "^7.18.2"
   },
   "autoload": {
     "App": "./app"

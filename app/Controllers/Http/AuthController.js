@@ -10,8 +10,6 @@ class AuthController {
 
 
 
-
-
   async store({ request, response }) {
 
     const rules = {
@@ -41,7 +39,7 @@ class AuthController {
     const validate = await validateAll(request.all(), rules, messages);
 
     if (validate._data.tipo_user == 1) {
-      console.log(validate._data.tipo_user)
+
       if (validate.fails()) {
         return response.status(401).send({ message: validate.messages() })
       }
@@ -107,12 +105,12 @@ class AuthController {
           this.where('tipo_user', 0)
         }).nearBy(lat, lng, 1000).fetch()
       const userJSON_ = await users.toJSON()
-        
+
         userJSON_.map(e => {
           e.distance = parseFloat((e.distance*1000).toFixed(2))
         })
         return userJSON_
-     
+
     }else if (tipo_user == 0) {
       const users = await User.query().with('produtos.categoria').where(
         function () {
@@ -125,7 +123,7 @@ class AuthController {
         })
         return userJSON_
       }
-  
+
   }
   async update({ params, request }) {
     const user = await User.findOrFail(params.id);
