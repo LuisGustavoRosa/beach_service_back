@@ -7,7 +7,7 @@ module.exports = {
   |--------------------------------------------------------------------------
   |
   | Below settings are applied when request body contains JSON payload. If
-  | you want body parser to ignore JSON payload, then simply set `types`
+  | you want bodvy parser to ignore JSON payload, then simply set `types`
   | to an empty array.
   */
   json: {
