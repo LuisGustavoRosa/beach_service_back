@@ -1,1 +1,1 @@
-web: node --harmony_proxies index.js
+web: node index.js
